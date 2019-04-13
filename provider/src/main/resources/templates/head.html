@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="bg-dark border-bottom">
+    <div class="container px-0">
+        <nav class="navbar navbar-expand-lg navbar-light bg-faded px-0">
+            <a class="navbar-brand ml-4" href="/">
+                <img class="" src="http://springforall.ufile.ucloud.com.cn/images/logo.png" style="width: 40px">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbarNavDropdown" class="navbar-collapse collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active ">
+                        <a class="nav-link text-white" href="/"><i class="material-icons float-left mr-1 ">home</i>首页 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/article/558">官方文档</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link text-white" href="/videos">视频教程</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="https://github.com/SpringForAll" target="_blank">开源项目</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="http://zhannei.baidu.com/cse/search">
+                            <input class="form-control ml-2" type="text" placeholder="搜索" id="bdcsMain" name="q">
+                            <div><input type="hidden" name="s" value="677461576189682531"><input type="hidden" name="entry" value="1"></div></form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            发布
+                        </a>
+                        <div class="dropdown-menu text-white" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/user/article/publish">文章</a>
+                            <a class="dropdown-item" href="/user/question/publish">问答</a>
+                        </div>
+                    </li>
+                    <li class="nav-item ml-4">
+                        <a class="btn btn-primary text-white" href="/login">登录</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <script>
+            var user = JSON.parse(null);
+            if (user !== null) {
+                $('#user-avatar').attr('src', user.avatar);
+                $.get("/user/api/data", function (response) {
+                    user = response.data;
+                    $('#user-avatar').attr('src', user.avatar);
+                    if (user.message > 0){
+                        $('#messageCount').text(user.message);
+                        $('#user-notice').attr('class', 'alert alert-warning alert-dismissible fade show');
+                    }else{
+                        $('#user-notice').alert('close');
+                    }
+                });
+            }
+        </script>
+        <script type="text/javascript">(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=677461576189682531' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();</script><div id="bdcs"><div class="bdcs-container"><meta http-equiv="x-ua-compatible" content="IE=9">                          </div></div>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade" role="alert" style="position: absolute; z-index: 99; right: 20px" id="user-notice">
+        你有 <strong id="messageCount"></strong> 条未读消息
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+</div>
+</body>
+</html>

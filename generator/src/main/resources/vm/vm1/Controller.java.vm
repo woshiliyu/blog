@@ -1,0 +1,116 @@
+package ${package}.${moduleName}.controller;
+
+import java.util.Arrays;
+import java.util.Map;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import org.springframework.ui.ModelMap;
+
+import ${package}.${moduleName}.entity.${className};
+import ${package}.${moduleName}.Service.${className}Service;
+import ${mainPath}.common.utils.rest.PageUtils;
+import ${mainPath}.common.utils.rest.R;
+import  ${mainPath}.common.utils.Query;
+
+
+
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("${moduleName}/${pathName}")
+public class ${className}Controller {
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+    /**
+     * 列表
+     */
+    @RequestMapping("/pagelist")
+    public R list(@RequestParam(defaultValue = "1") int page  ,@RequestParam(defaultValue = "10") int limit,){
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("page",page);
+        params.put("limit",limit);
+        Query query = new Query(params);
+        List<${className}> list = ${classname}Service.queryList(query);
+        int total = ${classname}Service.queryTotal(query);
+
+        PageUtils pageUtil = new PageUtils(list, total, query.getLimit(), query.getPage());
+
+        return R.ok().put("page", pageUtil);
+
+
+    }
+
+    /**
+ * 列表
+ */
+    @RequestMapping("/list")
+    public Result list(@RequestParam(defaultValue = "1") int page  ,@RequestParam(defaultValue = "10") int limit,ModelMap mmap){
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("page",page);
+        params.put("limit",limit);
+        Query query = new Query(params);
+        List<${className}> list = ${classname}Service.queryList(query);
+
+        mmap.addAttribute("${classname}s",list);
+
+        return "/article/articleList";
+    }
+
+
+    /**
+     * 信息
+     */
+    @RequestMapping("/info")
+    public R info(@RequestParam("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+        ${className} ${classname} = ${classname}Service.selectById(${pk.attrname});
+
+        return R.ok().put("${classname}", ${classname});
+    }
+
+    /**
+     * 保存
+     */
+    @RequestMapping("/save")
+    public R save( ${className} ${classname}){
+        ${classname}Service.insert${className}(${classname});
+
+        return R.ok();
+    }
+
+
+    /**
+     * 修改保存
+     */
+
+    @PostMapping("/edit")
+    @ResponseBody
+    public R editSave(${className} ${classname})
+    {
+        ${classname}Service.update${className}(${classname});
+        return R.ok();
+    }
+
+
+
+    /**
+     * 删除${tableComment}
+     */
+    @PostMapping( "/delete")
+    @ResponseBody
+    public R remove(String ids)
+    {
+        ${classname}Service.delete${className}ByIds(ids);
+        return R.ok();
+    }
+
+}

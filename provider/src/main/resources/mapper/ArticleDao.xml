@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ly.provider.sys.dao.ArticleDao">
+
+    <resultMap type="Article" id="ArticleResult">
+                    <result property="aid"    column="aid"    />
+                    <result property="title"    column="title"    />
+                    <result property="slug"    column="slug"    />
+                    <result property="content"    column="content"    />
+                    <result property="authorid"    column="authorId"    />
+                    <result property="setTop"    column="set_top"    />
+                    <result property="hits"    column="hits"    />
+                    <result property="thumbimg"    column="thumbImg"    />
+                    <result property="tags"    column="tags"    />
+                    <result property="categoriesId"    column="categories_id"    />
+                    <result property="articleType"    column="article_type"    />
+                    <result property="publicType"    column="public_type"    />
+                    <result property="commentsnum"    column="commentsNum"    />
+                    <result property="isenable"    column="isenable"    />
+                    <result property="addtime"    column="addtime"    />
+                    <result property="modtime"    column="modtime"    />
+            </resultMap>
+
+    <sql id="selectArticleVo">
+        select aid, title, slug, content, authorId, set_top, hits, thumbImg, tags, categories_id, article_type, public_type, commentsNum, isenable, addtime, modtime from article
+    </sql>
+
+    <select id="queryList" parameterType="Article" resultMap="ArticleResult">
+        <include refid="selectArticleVo"/>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="selectById" parameterType="Article" resultMap="ArticleResult">
+        <include refid="selectArticleVo"/>
+        where aid = #{aid}
+    </select>
+
+
+        <delete id="deleteArticleByIds" parameterType="String">
+        delete from article where aid in
+        <foreach item="aid" collection="array" open="(" separator="," close=")">
+            #{aid}
+        </foreach>
+    </delete>
+
+         <update id="updateArticle" parameterType="Article">
+        update article
+        <trim prefix="SET" suffixOverrides=",">
+
+                        <if test="title != null  and title != ''  ">title = #{title},</if>
+                        <if test="slug != null  and slug != ''  ">slug = #{slug},</if>
+                        <if test="content != null  and content != ''  ">content = #{content},</if>
+                        <if test="authorid != null  ">authorId = #{authorid},</if>
+                        <if test="setTop != null  ">set_top = #{setTop},</if>
+                        <if test="hits != null  ">hits = #{hits},</if>
+                        <if test="thumbimg != null  and thumbimg != ''  ">thumbImg = #{thumbimg},</if>
+                        <if test="tags != null  and tags != ''  ">tags = #{tags},</if>
+                        <if test="categoriesId != null  ">categories_id = #{categoriesId},</if>
+                        <if test="articleType != null  ">article_type = #{articleType},</if>
+                        <if test="publicType != null  ">public_type = #{publicType},</if>
+                        <if test="commentsnum != null  ">commentsNum = #{commentsnum},</if>
+                        <if test="isenable != null  ">isenable = #{isenable},</if>
+                        <if test="addtime != null  ">addtime = #{addtime},</if>
+                        <if test="modtime != null  ">modtime = #{modtime},</if>
+         </trim>
+        where aid =  #{aid}
+    </update>
+
+
+        <insert id="insertArticle" parameterType="Article">
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                <if test="aid != null  ">aid,</if>
+                                                                <if test="title != null  and title != ''  ">title,</if>
+                                                                <if test="slug != null  and slug != ''  ">slug,</if>
+                                                                <if test="content != null  and content != ''  ">content,</if>
+                                                                <if test="authorid != null  ">authorId,</if>
+                                                                <if test="setTop != null  ">set_top,</if>
+                                                                <if test="hits != null  ">hits,</if>
+                                                                <if test="thumbimg != null  and thumbimg != ''  ">thumbImg,</if>
+                                                                <if test="tags != null  and tags != ''  ">tags,</if>
+                                                                <if test="categoriesId != null  ">categories_id,</if>
+                                                                <if test="articleType != null  ">article_type,</if>
+                                                                <if test="publicType != null  ">public_type,</if>
+                                                                <if test="commentsnum != null  ">commentsNum,</if>
+                                                                <if test="isenable != null  ">isenable,</if>
+                                                                <if test="addtime != null  ">addtime,</if>
+                                                                <if test="modtime != null  ">modtime,</if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                <if test="aid != null  ">#{aid},</if>
+                                                                <if test="title != null  and title != ''  ">#{title},</if>
+                                                                <if test="slug != null  and slug != ''  ">#{slug},</if>
+                                                                <if test="content != null  and content != ''  ">#{content},</if>
+                                                                <if test="authorid != null  ">#{authorid},</if>
+                                                                <if test="setTop != null  ">#{setTop},</if>
+                                                                <if test="hits != null  ">#{hits},</if>
+                                                                <if test="thumbimg != null  and thumbimg != ''  ">#{thumbimg},</if>
+                                                                <if test="tags != null  and tags != ''  ">#{tags},</if>
+                                                                <if test="categoriesId != null  ">#{categoriesId},</if>
+                                                                <if test="articleType != null  ">#{articleType},</if>
+                                                                <if test="publicType != null  ">#{publicType},</if>
+                                                                <if test="commentsnum != null  ">#{commentsnum},</if>
+                                                                <if test="isenable != null  ">#{isenable},</if>
+                                                                <if test="addtime != null  ">#{addtime},</if>
+                                                                <if test="modtime != null  ">#{modtime},</if>
+                                    </trim>
+    </insert>
+
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from article
+    </select>
+
+</mapper>

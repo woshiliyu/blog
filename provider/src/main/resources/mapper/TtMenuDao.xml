@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ly.provider.sys.dao.TtMenuDao">
+
+    <resultMap type="TtMenu" id="TtMenuResult">
+                    <result property="id"    column="id"    />
+                    <result property="url"    column="url"    />
+                    <result property="path"    column="path"    />
+                    <result property="component"    column="component"    />
+                    <result property="name"    column="name"    />
+                    <result property="iconcls"    column="iconCls"    />
+                    <result property="keepalive"    column="keepAlive"    />
+                    <result property="requireauth"    column="requireAuth"    />
+                    <result property="parentid"    column="parentId"    />
+                    <result property="isenale"    column="isenale"    />
+                    <result property="addTime"    column="add_time"    />
+                    <result property="addUser"    column="add_user"    />
+                    <result property="modTime"    column="mod_time"    />
+                    <result property="modUser"    column="mod_user"    />
+            </resultMap>
+
+    <sql id="selectTtMenuVo">
+        select id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, isenale, add_time, add_user, mod_time, mod_user from tt_menu
+    </sql>
+
+    <select id="queryList" parameterType="TtMenu" resultMap="TtMenuResult">
+        <include refid="selectTtMenuVo"/>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="selectById" parameterType="TtMenu" resultMap="TtMenuResult">
+        <include refid="selectTtMenuVo"/>
+        where id = #{id}
+    </select>
+
+
+        <delete id="deleteTtMenuByIds" parameterType="String">
+        delete from tt_menu where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+         <update id="updateTtMenu" parameterType="TtMenu">
+        update tt_menu
+        <trim prefix="SET" suffixOverrides=",">
+                                                <if test="id != null  ">id = #{id},</if>
+                                                                <if test="url != null  and url != ''  ">url = #{url},</if>
+                                                                <if test="path != null  and path != ''  ">path = #{path},</if>
+                                                                <if test="component != null  and component != ''  ">component = #{component},</if>
+                                                                <if test="name != null  and name != ''  ">name = #{name},</if>
+                                                                <if test="iconcls != null  and iconcls != ''  ">iconCls = #{iconcls},</if>
+                                                                <if test="keepalive != null  ">keepAlive = #{keepalive},</if>
+                                                                <if test="requireauth != null  ">requireAuth = #{requireauth},</if>
+                                                                <if test="parentid != null  ">parentId = #{parentid},</if>
+                                                                <if test="isenale != null  ">isenale = #{isenale},</if>
+                                                                <if test="addTime != null  ">add_time = #{addTime},</if>
+                                                                <if test="addUser != null  ">add_user = #{addUser},</if>
+                                                                <if test="modTime != null  ">mod_time = #{modTime},</if>
+                                                                <if test="modUser != null  ">mod_user = #{modUser},</if>
+                                    </trim>
+        where ${primaryKey.columnName} = #{${primaryKey.attrname}}
+    </update>
+
+
+        <insert id="insertTtMenu" parameterType="TtMenu">
+        insert into tt_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                <if test="id != null  ">id,</if>
+                                                                <if test="url != null  and url != ''  ">url,</if>
+                                                                <if test="path != null  and path != ''  ">path,</if>
+                                                                <if test="component != null  and component != ''  ">component,</if>
+                                                                <if test="name != null  and name != ''  ">name,</if>
+                                                                <if test="iconcls != null  and iconcls != ''  ">iconCls,</if>
+                                                                <if test="keepalive != null  ">keepAlive,</if>
+                                                                <if test="requireauth != null  ">requireAuth,</if>
+                                                                <if test="parentid != null  ">parentId,</if>
+                                                                <if test="isenale != null  ">isenale,</if>
+                                                                <if test="addTime != null  ">add_time,</if>
+                                                                <if test="addUser != null  ">add_user,</if>
+                                                                <if test="modTime != null  ">mod_time,</if>
+                                                                <if test="modUser != null  ">mod_user,</if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                <if test="id != null  ">#{id},</if>
+                                                                <if test="url != null  and url != ''  ">#{url},</if>
+                                                                <if test="path != null  and path != ''  ">#{path},</if>
+                                                                <if test="component != null  and component != ''  ">#{component},</if>
+                                                                <if test="name != null  and name != ''  ">#{name},</if>
+                                                                <if test="iconcls != null  and iconcls != ''  ">#{iconcls},</if>
+                                                                <if test="keepalive != null  ">#{keepalive},</if>
+                                                                <if test="requireauth != null  ">#{requireauth},</if>
+                                                                <if test="parentid != null  ">#{parentid},</if>
+                                                                <if test="isenale != null  ">#{isenale},</if>
+                                                                <if test="addTime != null  ">#{addTime},</if>
+                                                                <if test="addUser != null  ">#{addUser},</if>
+                                                                <if test="modTime != null  ">#{modTime},</if>
+                                                                <if test="modUser != null  ">#{modUser},</if>
+                                    </trim>
+    </insert>
+
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from tt_menu
+    </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+package ${package}.${moduleName}.Service;
+
+
+import ${mainPath}.common.utils.rest.PageUtils;
+import ${package}.${moduleName}.entity.${className};
+
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public interface ${className}Service {
+
+    public List<${className}>  queryList(Map<String, Object> map);
+
+    public ${className} selectById(${pk.attrType} ${pk.attrname});
+
+    public int insert${className}(${className} ${classname});
+
+    public int update${className}(${className} ${classname});
+
+    public int delete${className}ByIds(String ids);
+
+    int queryTotal(Map<String, Object> map);
+}
+

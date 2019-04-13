@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ly.provider.sys.dao.TtUserDao">
+
+    <resultMap type="TtUser" id="TtUserResult">
+                    <result property="userId"    column="user_id"    />
+                    <result property="avatar"    column="avatar"    />
+                    <result property="userName"    column="user_name"    />
+                    <result property="password"    column="password"    />
+                    <result property="name"    column="name"    />
+                    <result property="birthday"    column="birthday"    />
+                    <result property="sex"    column="sex"    />
+                    <result property="email"    column="email"    />
+                    <result property="phone"    column="phone"    />
+                    <result property="deptid"    column="deptid"    />
+                    <result property="isenale"    column="isenale"    />
+                    <result property="addTime"    column="add_time"    />
+                    <result property="addUser"    column="add_user"    />
+                    <result property="modTime"    column="mod_time"    />
+                    <result property="modUser"    column="mod_user"    />
+            </resultMap>
+
+    <sql id="selectTtUserVo">
+        select user_id, avatar, user_name, password, name, birthday, sex, email, phone, deptid, isenale, add_time, add_user, mod_time, mod_user from tt_user
+    </sql>
+
+    <select id="queryList" parameterType="TtUser" resultMap="TtUserResult">
+        <include refid="selectTtUserVo"/>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="selectById" parameterType="TtUser" resultMap="TtUserResult">
+        <include refid="selectTtUserVo"/>
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectUserByUserName" parameterType="String" resultMap="TtUserResult">
+        <include refid="selectTtUserVo"/>
+        where user_name = #{userName}
+    </select>
+
+        <delete id="deleteTtUserByIds" parameterType="String">
+        delete from tt_user where user_id in
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+         <update id="updateTtUser" parameterType="TtUser">
+        update tt_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="avatar != null  and avatar != ''  ">avatar = #{avatar},</if>
+            <if test="userName != null  and userName != ''  ">user_name = #{userName},</if>
+            <if test="password != null  and password != ''  ">password = #{password},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="birthday != null  ">birthday = #{birthday},</if>
+            <if test="sex != null  ">sex = #{sex},</if>
+            <if test="email != null  and email != ''  ">email = #{email},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="deptid != null  and deptid != ''  ">deptid = #{deptid},</if>
+            <if test="isenale != null  ">isenale = #{isenale},</if>
+            <if test="addTime != null  ">add_time = #{addTime},</if>
+            <if test="addUser != null  ">add_user = #{addUser},</if>
+            <if test="modTime != null  ">mod_time = #{modTime},</if>
+            <if test="modUser != null  ">mod_user = #{modUser},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+
+        <insert id="insertTtUser" parameterType="TtUser">
+        insert into tt_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null  ">user_id,</if>
+            <if test="avatar != null  and avatar != ''  ">avatar,</if>
+            <if test="userName != null  and userName != ''  ">user_name,</if>
+            <if test="password != null  and password != ''  ">password,</if>
+            <if test="name != null  and name != ''  ">name,</if>
+            <if test="birthday != null  ">birthday,</if>
+            <if test="sex != null  ">sex,</if>
+            <if test="email != null  and email != ''  ">email,</if>
+            <if test="phone != null  and phone != ''  ">phone,</if>
+            <if test="deptid != null  and deptid != ''  ">deptid,</if>
+            <if test="isenale != null  ">isenale,</if>
+            <if test="addTime != null  ">add_time,</if>
+            <if test="addUser != null  ">add_user,</if>
+            <if test="modTime != null  ">mod_time,</if>
+            <if test="modUser != null  ">mod_user,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null  ">#{userId},</if>
+            <if test="avatar != null  and avatar != ''  ">#{avatar},</if>
+            <if test="userName != null  and userName != ''  ">#{userName},</if>
+            <if test="password != null  and password != ''  ">#{password},</if>
+            <if test="name != null  and name != ''  ">#{name},</if>
+            <if test="birthday != null  ">#{birthday},</if>
+            <if test="sex != null  ">#{sex},</if>
+            <if test="email != null  and email != ''  ">#{email},</if>
+            <if test="phone != null  and phone != ''  ">#{phone},</if>
+            <if test="deptid != null  and deptid != ''  ">#{deptid},</if>
+            <if test="isenale != null  ">#{isenale},</if>
+            <if test="addTime != null  ">#{addTime},</if>
+            <if test="addUser != null  ">#{addUser},</if>
+            <if test="modTime != null  ">#{modTime},</if>
+            <if test="modUser != null  ">#{modUser},</if>
+         </trim>
+    </insert>
+
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from tt_user
+    </select>
+
+</mapper>

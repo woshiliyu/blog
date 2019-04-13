@@ -1,0 +1,41 @@
+server:
+  port: 8080
+spring:
+thymeleaf:
+  cache: false
+  prefix: classpath:/templates/
+  suffix: .html
+  encoding: UTF-8
+  content-type: text/html
+  mode: HTML5
+
+druid:
+ jdbc:
+   driveClassName: com.mysql.jdbc.Driver
+   jdbcUrl: jdbc:mysql://localhost:3306/mydb?useUnicode=true&characterEncoding=utf8&useSSL=true
+   jdbcUsername: root
+   jdbcPassword: woshiliyu921102
+   maxActive: 20
+   initialSize: 1
+   maxWait: 60000
+   minIdle: 3
+   timeBetweenEvictionRunsMillis: 60000
+   minEvictableIdleTimeMillis: 300000
+   validationQuery: SELECT 'x'
+   testWhileIdle: true
+   testOnBrowwon: false
+   testOnReturn: false
+   filters: stat,wall
+
+logging:
+  config: classpath:log4j2.xml
+  level:
+    root: info
+    ## 控制台打印sql语句
+    com.ly.provider.sys.dao : debug
+
+mybatis:
+   #  mybatis����mapper��xml�ļ�·��
+  mapperLocations: classpath:mapper/*.xml
+  #  ����ӳ����İ���
+  type-aliases-package: com.ly.provider.sys.entity
